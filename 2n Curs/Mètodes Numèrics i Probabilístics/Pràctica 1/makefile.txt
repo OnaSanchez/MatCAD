@@ -1,0 +1,68 @@
+#
+# Makefile for generador.c, gauss.c and comprovador.sh
+# @Version: 2.0
+#
+# @Authors:
+#           --> Ona Sánchez -- 1601181
+#           --> Gerard Lahuerta -- 1601350
+#
+# @Copyright (c) 2022 All Right Reserved
+#
+
+
+#Options needed to run the makefile
+include options.mk
+
+
+all: gauss generador comprovador
+
+################################################################################
+comprovador:
+		chmod 744 comprovador.sh
+
+################################################################################
+generador:  generador.o aleatori.o
+		gcc generador.o  aleatori.o -lm -o generador
+
+generador.o: generador.c
+		gcc -c generador.c  aleatori.c -lm
+
+aleatori.o: aleatori.c aleatori.h
+		gcc -c aleatori.c aleatori.h -lm
+
+################################################################################
+generador_gsl: gauss generador_gsl.o aleatori_gsl.o
+	gcc generador.o aleatori_gsl.o -L$(LIBPATH) -Wl,-R$(LIBPATH) -lgsl -lgslcblas -lm -o generador
+
+generador_gsl.o: generador.c
+	gcc -c generador.c  aleatori_gsl.c -I$(INCLUDEPATH) -lm
+
+aleatori_gsl.o: aleatori_gsl.c aleatori.h
+	gcc -c aleatori_gsl.c aleatori.h -I$(INCLUDEPATH) -lm
+
+################################################################################
+gauss:  gauss.o integracio.o
+		gcc gauss.o  integracio.o -lm -o gauss
+
+gauss.o: gauss.c
+		gcc -c gauss.c  integracio.c -lm
+
+integracio.o: integracio.c integracio.h
+		gcc -c integracio.c integracio.h -lm
+
+################################################################################
+clean:
+		$(DELETE) *.o
+
+clean_gauss:
+	$(DELETE) *.o
+	$(DELETE) gauss
+
+clean_generador:
+	$(DELETE) *.o
+	$(DELETE) generador
+
+clean_all:
+		$(DELETE) *.o
+		$(DELETE) gauss
+		$(DELETE) generador

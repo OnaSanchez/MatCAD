@@ -1,0 +1,17 @@
+# Variables
+var x {1..4} <=300;
+var y {1..4} >=0;
+var z >=0;
+
+# Funci´o objectiu
+minimize k : 90*x[1]+60*z+108*x[3]+126*x[4] + 40*(x[1]+x[3])+30*(z+x[4]) + 15*y[1]+27*y[2]+24*y[3]+18*y[4];
+
+# Restriccions
+subject to r1 : x[1]+z=500;
+subject to r2 : x[3]+x[4]=400;
+subject to r3 : x[1]+x[3]<=500;
+subject to r4 : z+x[4]<=600;
+subject to r5 : 0.2*(x[1]+x[3])=y[1]+y[2];
+subject to r6 : 0.2*(z+x[4])=y[3]+y[4];
+end ;
+

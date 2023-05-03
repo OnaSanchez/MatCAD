@@ -1,0 +1,38 @@
+#
+# Makefile for pendol.c
+# @Version: 1.0
+#
+# @Authors:
+#           --> Ona Sánchez -- 1601181
+#           --> Gerard Lahuerta -- 1601350
+#
+# @Copyright (c) 2022 All Right Reserved
+#
+
+
+DELETE  = rm
+
+all: pendol
+
+################################################################################
+pendol:  pendol.o RK4.o
+		gcc pendol.o  RK4.o -lm -o pendol
+
+pendol.o: pendol.c
+		gcc -c pendol.c  RK4.c -lm
+
+RK4.o: RK4.c
+		gcc -c RK4.c
+
+graphics: pendol
+	chmod 744 gnu_graphic.gp
+	chmod 744 generator_graphic.sh
+
+################################################################################
+clean:
+		$(DELETE) *.o
+
+clean_all:
+		$(DELETE) *.o
+		$(DELETE) RK4
+		$(DELETE) pendol

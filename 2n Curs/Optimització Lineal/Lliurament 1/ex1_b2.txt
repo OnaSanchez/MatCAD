@@ -1,0 +1,54 @@
+#Declaracio de conjunts d'indexos:
+set llaunes;
+
+#Declaracio de parametres:
+param benefici{llaunes};
+param envasat{llaunes};
+param test{llaunes};
+param preu_peix{llaunes};
+param preu_llauna{llaunes};
+
+#Declarem variables:
+var x{i in llaunes}>=0, integer; #variable vector indexat a llaunes
+
+#Func. objectiu:
+maximize benefici_total: sum{i in llaunes} benefici[i]*x[i];
+
+#Restriccions:
+subject to
+totalpeix: sum{i in llaunes} preu_peix[i]*x[i]<=56000;
+totalllauna: sum{i in llaunes} preu_llauna[i]*x[i]<=1400000;
+henvasat: sum{i in llaunes} x[i]/envasat[i]<=600;
+htest: sum{i in llaunes} x[i]/test[i]<=640;
+
+solve; # demanem que resolgui el problema abans de mostrar resultat
+display x; #imprimir per pantalla la solucio
+
+#Bloc de dades
+data;
+
+#Elements del conjunt de llaunes:
+set llaunes:= anxoves sardines;
+
+#Valors dels parametres:
+param envasat:=
+anxoves 1600
+sardines 2000;
+
+param test:=
+anxoves 800
+sardines 800;
+
+param preu_peix:=
+anxoves 0.3
+sardines 0.2;
+
+param preu_llauna:=
+anxoves 0.11
+sardines 0.08;
+
+param benefici:=
+anxoves 0.26
+sardines 0.2;
+
+end;

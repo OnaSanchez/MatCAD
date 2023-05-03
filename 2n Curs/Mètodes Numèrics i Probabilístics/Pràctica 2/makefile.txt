@@ -1,0 +1,30 @@
+#
+# Makefile for aleatori.c, arrels.c
+# @Version: 1.0
+#
+# @Authors:
+#           --> Ona Sánchez -- 1601181
+#           --> Gerard Lahuerta -- 1601350
+#
+# @Copyright (c) 2022 All Right Reserved
+#
+
+DELETE = rm # change to del if Windows
+
+all: arrels
+
+arrels: arrels.o aleatori.o
+		gcc arrels.o  aleatori.o -lm -o arrels
+
+arrels.o: arrels.c
+		gcc -c arrels.c  aleatori.c -lm
+
+aleatori.o: aleatori.c aleatori.h
+		gcc -c aleatori.c aleatori.h -lm
+
+clean:
+		$(DELETE) *.o
+
+clean_all:
+		$(DELETE) *.o
+		$(DELETE) arrels

@@ -1,0 +1,62 @@
+#Declaracio de conjunts d'indexos:
+set Ciutats;
+set Incinerador;
+set Abocadors;
+
+#Declaracio de parametres:
+param r_produits{Ciutats};
+param dist_incineradora{Ciutats, Incinerador};
+param cap_incinerador{Incinerador};
+param cost_incinerador{Incinerador};
+param dist_abocadors{Incinerador,Abocadors};
+
+#Declaracio de variables:
+var x{Ciutats, Incinerador}>=0;
+var y{Incinerador, Abocadors}>=0;
+
+#Func. objectiu:
+minimize cost_total: sum{i in Ciutats, j in Incinerador} 3*dist_incineradora[i,j]*x[i,j] + 
+			sum{i in Ciutats, j in Incinerador} cost_incinerador[j]*x[i,j] +
+			sum{j in Incinerador, k in Abocadors} 3*dist_abocadors[j,k]*y[j,k];
+			
+#Restriccions indexades:
+subject to
+r_ciutat{i in Ciutats}: sum{j in Incinerador} x[i,j] = r_produits[i];
+c_incinerador{j in Incinerador}: sum{i in Ciutats} x[i,j] <= cap_incinerador[j];
+reduit{j in Incinerador}: sum{i in Ciutats} 0.2*x[i,j] = sum{k in Abocadors} y[j,k]; 
+
+solve; # demanem que resolgui el problema abans de mostrar resultat
+display x; #imprimir per pantalla la solucio
+
+#Bloc de dades
+data;
+
+set Ciutats := 1 2;
+set Incinerador := A B;
+set Abocadors := N S;
+
+param r_produits:=
+1 500
+2 400;
+
+param cap_incinerador:=
+A 500
+B 600;
+
+param cost_incinerador:=
+A 40
+B 30;
+
+param dist_incineradora:
+   A   B:=
+1  0   30 
+2  30  0;
+
+param dist_abocadors:
+   N  S:=
+A  35  38
+B  51  48;
+
+end;
+
+
