@@ -1,0 +1,14 @@
+__global__ void reduce(int *V_d, int *res_d, unsigned long n){
+    __shared__ int partialSum[2*BLOCKSIZE];
+    unsigned int t = threadIdx.x;
+    unsigned int start = 2*blockIdx.x*blockDim.x;
+
+    partialSum[2*t] = V_d[start + t];
+    partialSum[2*t+1] = V_d[start + t + BLOCKSIZE];
+
+    for (unsigned int stride=blockDim.x; stride>0; stride/=2){
+        __syncthreads();
+        if(t < stride) partialSum[t] += partialSum[t+stride];
+    }
+    if (t == 0) atomicAdd(res_d, partialSum[0]);
+}

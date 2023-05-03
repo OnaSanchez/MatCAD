@@ -1,0 +1,75 @@
+#include <stdio.h>
+#ifdef _OPENACC
+#include <openacc.h>
+#endif
+#include <cuda.h>
+
+#define NX 102400
+#define BLOCKSIZE 512
+
+
+__global__ void sumaV(double *A_d, double *B_d, double *C_d, unsigned long n){
+
+    /* Cada thread calcula un element del vector C_d*/
+    //int idx = blockIdx.x*blockDim.x + threadIdx.x; // <-- distancia blockIDx.x
+    int idx = blockIdx.x +threadIdx.x;    // <-- consecutius
+    /* Comprovem que no estiguem fora dels limits dels vectors */
+    if (idx < n) C_d[idx] = A_d[idx] + B_d[idx];
+
+}
+
+
+int main(void)
+{
+    double vecA[NX], vecB[NX], vecC[NX];
+    double sum;
+    int i;
+
+    /* Initialization of the vectors */
+    for (i = 0; i < NX; i++) {
+        vecA[i] = 1.0 / ((double) (NX - i));
+        vecB[i] = vecA[i] * vecA[i];
+    }
+
+
+    double *VA, *VB, *VC;
+    //Reservem memòria en el dispositiu i copiem els vectors A i B
+    cudaMalloc(&VA, NX*sizeof(double));
+//    printf("Malloc A %s\n", cudaGetErrorString( cudaGetLastError() ));
+    cudaMemcpy(VA, vecA, NX*sizeof(double), cudaMemcpyHostToDevice);
+//    printf("Memcpy A %s\n", cudaGetErrorString( cudaGetLastError() ));
+    cudaMalloc(&VB, NX*sizeof(double));
+//    printf("Malloc B %s\n", cudaGetErrorString( cudaGetLastError() ));
+    cudaMemcpy(VB, vecB, NX*sizeof(double), cudaMemcpyHostToDevice);
+//    printf("Memcpy B %s\n", cudaGetErrorString( cudaGetLastError() ));
+    cudaMalloc(&VC, NX*sizeof(double));
+//    printf("Malloc C %s\n", cudaGetErrorString( cudaGetLastError() ));
+    // Fem la suma en la GPU
+    // De les transparències: 
+    //    Blocks should include a number of threads divisible by 32  (warp size)<200b>
+    sumaV<<<trunc(ceil((NX*1.0)/BLOCKSIZE)),BLOCKSIZE>>>(VA, VB, VC, NX);
+//    printf("Kernel %s\n", cudaGetErrorString( cudaGetLastError() ));
+    // Recuperem el resultat
+    cudaMemcpy(vecC, VC,  NX*sizeof(double), cudaMemcpyDeviceToHost);
+//    printf("Memcpy %s\n", cudaGetErrorString( cudaGetLastError() ));
+    // Alliberem la memòria reservada al dispositiu
+    cudaFree(VA);
+//    printf("Free %s\n", cudaGetErrorString( cudaGetLastError() ));
+    cudaFree(VB);
+//    printf("Free %s\n", cudaGetErrorString( cudaGetLastError() ));
+    cudaFree(VC);
+//    printf("Free %s\n", cudaGetErrorString( cudaGetLastError() ));
+
+
+    //#pragma acc kernels loop
+    // #pragma acc parallel loop copy(vecC, vecA, vecB)
+   // for(i = 0; i < NX; i++) vecC[i] = vecA[i] + vecB[i];
+
+    sum = 0.0;
+    /* Compute the check value */
+    for (i = 0; i < NX/2; i++) {
+        sum += vecC[i];
+    }
+    printf("Reduction sum: %18.16f\n", sum);
+    return 0;
+}

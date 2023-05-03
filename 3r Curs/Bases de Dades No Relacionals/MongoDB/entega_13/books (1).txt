@@ -1,0 +1,7 @@
+db.books.insert({ title: "Book 1", year: 2016, edition: "3rd", author: "A2" })
+db.books.insert({ title: "Book 2", year: 2015, edition: "1st", author: "A1" })
+db.books.insert({ title: "Book 3", year: 2017, edition: "1st", author: "A3" })
+db.books.insert({ title: "Book 4", year: 2013, edition: "2nd", author: "A4" })
+db.books.insert({ title: "Book 5", year: 2014, edition: "1st", author: "A2" })
+db.books.insert({ title: "Book 6", year: 2019, edition: "1st", author: "A1" })
+

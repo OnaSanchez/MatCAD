@@ -1,0 +1,7 @@
+[
+{"_id":{"$oid":"6406fecd3f151450fc8b0c3f"},"category":"camisetas","createdAt":{"$date":{"$numberLong":"1580515200000"}},"desc":"Camiseta estampada","price":{"$numberDouble":"19.99"},"sizesStock":[{"s":{"$numberInt":"2"}},{"m":{"$numberInt":"0"}},{"l":{"$numberInt":"2"}}],"cares":[{"iron":false},{"dryer":false}]},
+{"_id":{"$oid":"6406fecd3f151450fc8b0c40"},"category":"pantalones","createdAt":{"$date":{"$numberLong":"1581984000000"}},"desc":"Pantalón chico","price":{"$numberDouble":"39.99"},"sizesStock":[{"s":{"$numberInt":"0"}},{"m":{"$numberInt":"3"}},{"l":{"$numberInt":"1"}}],"cares":[{"iron":true},{"dryer":true}]},
+{"_id":{"$oid":"6406fecd3f151450fc8b0c41"},"category":"pantalones","createdAt":{"$date":{"$numberLong":"1582070400000"}},"desc":"Pantalón chica","price":{"$numberDouble":"9.99"},"sizesStock":[{"s":{"$numberInt":"5"}},{"m":{"$numberInt":"5"}},{"l":{"$numberInt":"2"}}],"cares":[{"iron":true},{"dryer":false}]},
+{"_id":{"$oid":"6406fecd3f151450fc8b0c42"},"category":"chaquetas","createdAt":{"$date":{"$numberLong":"1582848000000"}},"desc":"Chaqueta de piel","price":{"$numberDouble":"69.99"},"sizesStock":[{"s":{"$numberInt":"5"}},{"m":{"$numberInt":"5"}},{"l":{"$numberInt":"2"}}],"cares":[{"iron":true},{"dryer":false}]},
+{"_id":{"$oid":"6406fecd3f151450fc8b0c43"},"category":"faldas","createdAt":{"$date":{"$numberLong":"1587513600000"}},"desc":"Falda estampado floreado","price":{"$numberDouble":"19.99"},"sizesStock":[{"s":{"$numberInt":"6"}},{"m":{"$numberInt":"8"}},{"l":{"$numberInt":"3"}}],"cares":[{"iron":false},{"dryer":false}]}
+]

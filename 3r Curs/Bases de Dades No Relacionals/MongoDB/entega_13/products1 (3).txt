@@ -1,0 +1,116 @@
+db.products.insert({
+    _id: 'p1',
+    categories: ['camisetas', 'verano'],
+    createdAt: new Date('2020-02-01'),
+    desc: 'Camiseta estampada 1',
+    price: 19.99,
+    sizesStock: {
+      'xs': 2,
+      's': 2,
+      'm': 0,
+      'l': 2,
+      'xl': 0
+    },
+    cares: [
+        {'iron': false},
+        {'dryer': false},
+        {'bleach': true}
+    ],
+    ratings: [
+        { user: 1, rating: 3 },
+        { user: 2, rating: 4 }
+    ]
+})
+
+db.products.insert({
+    _id: 'p2',
+    categories: ['pantalones', 'verano'],
+    createdAt: new Date('2020-02-18'),
+    desc: 'Pantalón chico 1',
+    price: 39.99,
+    sizesStock: {
+      'xs': 0,
+      's': 0,
+      'm': 3,
+      'l': 1,
+      'xl': 1
+    },
+    cares: [
+        {'iron': true},
+        {'dryer': true}
+    ],
+    ratings: [
+        { user: 3, rating: 4 }
+    ]
+})
+
+db.products.insert({
+    _id: 'p3',
+    categories: ['pantalones', 'primavera'],
+    createdAt: new Date('2020-02-19'),
+    desc: 'Pantalón chica 1',
+    price: 9.99,
+    sizesStock: {
+      's': 5,
+      'm': 5,
+      'l': 2
+    },
+    cares: [
+        {'iron': true},
+        {'dryer': false},
+        {'bleach': false}
+    ],
+    ratings: [
+        { user: 1, rating: 5 },
+        { user: 2, rating: 5 },
+        { user: 3, rating: 5 }
+    ]
+})
+
+db.products.insert({
+    _id: 'p4',
+    categories: ['chaquetas', 'invierno'],
+    createdAt: new Date('2020-02-28'),
+    desc: 'Chaqueta de piel 1',
+    price: 69.99,
+    sizesStock: {
+      's': 5,
+      'm': 5,
+      'l': 2
+    },
+    cares: [
+        {'iron': true},
+        {'dryer': false},
+        {'bleach': false}
+    ],
+    ratings: [
+        { user: 3, rating: 3 },
+        { user: 2, rating: 4 }
+    ]
+})
+
+
+
+db.products.insert({
+    _id: 'p5',
+    categories: ['chaquetas', 'invierno'],
+    createdAt: new Date('2020-02-28'),
+    desc: '',
+    price: 69.99,
+    sizesStock: {
+      's': 5,
+      'm': 5,
+      'l': 2
+    },
+    cares: [
+        {'iron': true},
+        {'dryer': false},
+        {'bleach': false}
+    ],
+    ratings: [
+        { user: 3, rating: 3 },
+        { user: 2, rating: 4 }
+    ]
+})
+
+
